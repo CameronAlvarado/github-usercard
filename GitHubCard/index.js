@@ -3,6 +3,32 @@
            https://api.github.com/users/<your name>
 */
 
+
+
+// async function getUser() { 
+//   try {
+//   const response = await axios.get('https://api.github.com/users/CameronAlvarado');
+//   console.log(response)
+//   }
+//   // .then( response => gitCard(response.data))
+//   catch (err) {
+//     console.error(err);
+//   }
+// }
+
+const entryPoint = document.querySelector('.cards');
+
+
+ axios.get('https://api.github.com/users/CameronAlvarado')
+  .then( (response) => {
+    entryPoint.appendChild(gitCard(response.data))
+    console.log(response.data);
+  })
+  .catch( (err) => {
+    console.error(err);
+  })
+
+
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
    data in order to use it to build your component function 
@@ -46,6 +72,59 @@ const followersArray = [];
 
 */
 
+function gitCard(obj) {
+
+  // create elements
+  let newCard = document.createElement('div');
+  let newImg = document.createElement('img');
+  let cardInfo = document.createElement('div');
+  let name = document.createElement('h3');
+  let username = document.createElement('p');
+  let location = document.createElement('p');
+  let profile = document.createElement('p');
+  let profileLink = document.createElement('a');
+  let followers = document.createElement('p');
+  let following = document.createElement('p');
+  let bio = document.createElement('p');
+  
+  // append elements
+  newCard.appendChild(newImg);
+  newCard.appendChild(cardInfo);
+  cardInfo.appendChild(name);
+  cardInfo.appendChild(username);
+  cardInfo.appendChild(location);
+  cardInfo.appendChild(profile);
+  profile.appendChild(profileLink);
+  cardInfo.appendChild(followers);
+  cardInfo.appendChild(following);
+  cardInfo.appendChild(bio);
+
+  // apply classes
+  newCard.classList.add('card');
+  cardInfo.classList.add('card-info');
+  name.classList.add('name');
+  username.classList.add('username');
+
+
+  // sources
+  newImg.src = obj.avatar_url;
+  name.textContent = obj.name;
+  username.textContent = obj.login;
+  location.textContent = obj.location;
+  profileLink.src = obj.html_url;
+  followers.textContent = [`Followers: ${obj.followers}`];
+  following.textContent = [`Followers: ${obj.following}`];;
+  bio.textContent = obj.bio;
+
+  // newCard.addEventListener('click', () => {
+  //   newCard.classList.toggle('selected')
+  // })
+  
+  return newCard;
+};
+
+// let entryPoint = document.querySelector('.entry')
+
 /* List of LS Instructors Github username's: 
   tetondan
   dustinmyers
@@ -53,3 +132,4 @@ const followersArray = [];
   luishrd
   bigknell
 */
+
