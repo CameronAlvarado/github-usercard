@@ -3,32 +3,6 @@
            https://api.github.com/users/<your name>
 */
 
-
-
-// async function getUser() { 
-//   try {
-//   const response = await axios.get('https://api.github.com/users/CameronAlvarado');
-//   console.log(response)
-//   }
-//   // .then( response => gitCard(response.data))
-//   catch (err) {
-//     console.error(err);
-//   }
-// }
-
-const entryPoint = document.querySelector('.cards');
-
-
- axios.get('https://api.github.com/users/CameronAlvarado')
-  .then( (response) => {
-    entryPoint.appendChild(gitCard(response.data))
-    console.log(response.data);
-  })
-  .catch( (err) => {
-    console.error(err);
-  })
-
-
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
    data in order to use it to build your component function 
@@ -49,8 +23,27 @@ const entryPoint = document.querySelector('.cards');
           Using that array, iterate over it, requesting data for each user, creating a new card for each
           user, and adding that card to the DOM.
 */
+const entryPoint = document.querySelector('.cards');
 
-const followersArray = [];
+const followersArray = ["CameronAlvarado", "jonyonson", "allisonkydy", "jeffreywhitaker"];
+
+ followersArray.forEach(item => {
+  axios.get([`https://api.github.com/users/${item}`])
+  .then( (response) => {
+  entryPoint.appendChild(gitCard(response.data))
+  })
+  .catch( (err) => {
+    console.log(err);
+  })
+});
+
+  // .then( (response) => {
+  //   entryPoint.appendChild(gitCard(response.data))
+  // })
+  // .catch( (err) => {
+  //   console.log(err)
+  // })
+// })
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
@@ -94,7 +87,7 @@ function gitCard(obj) {
   cardInfo.appendChild(username);
   cardInfo.appendChild(location);
   cardInfo.appendChild(profile);
-  profile.appendChild(profileLink);
+  // profile.appendChild(profileLink);
   cardInfo.appendChild(followers);
   cardInfo.appendChild(following);
   cardInfo.appendChild(bio);
@@ -109,11 +102,12 @@ function gitCard(obj) {
   // sources
   newImg.src = obj.avatar_url;
   name.textContent = obj.name;
-  username.textContent = obj.login;
+  username.textContent = [`Username: ${obj.login}`];
   location.textContent = obj.location;
-  profileLink.src = obj.html_url;
+  profileLink.href = obj.html_url;
+  profile.textContent = [`Profile: ${profileLink}`];
   followers.textContent = [`Followers: ${obj.followers}`];
-  following.textContent = [`Followers: ${obj.following}`];;
+  following.textContent = [`Followers: ${obj.following}`];
   bio.textContent = obj.bio;
 
   // newCard.addEventListener('click', () => {
