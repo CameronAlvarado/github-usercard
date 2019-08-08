@@ -80,6 +80,24 @@ function gitCard(obj) {
   let following = document.createElement('p');
   let bio = document.createElement('p');
   
+  // apply classes
+  newCard.classList.add('card');
+  cardInfo.classList.add('card-info');
+  name.classList.add('name');
+  username.classList.add('username');
+
+  // sources
+  newImg.src = obj.avatar_url;
+  name.textContent = obj.name;
+  username.textContent = [`Username: ${obj.login}`];
+  location.textContent = obj.location;
+  profile.textContent = "Profile: ";
+  profileLink.href = obj.html_url;
+  profileLink.textContent = profileLink;
+  followers.textContent = [`Followers: ${obj.followers}`];
+  following.textContent = [`Followers: ${obj.following}`];
+  bio.textContent = obj.bio;
+
   // append elements
   newCard.appendChild(newImg);
   newCard.appendChild(cardInfo);
@@ -87,33 +105,11 @@ function gitCard(obj) {
   cardInfo.appendChild(username);
   cardInfo.appendChild(location);
   cardInfo.appendChild(profile);
-  // profile.appendChild(profileLink);
+  profile.appendChild(profileLink);
   cardInfo.appendChild(followers);
   cardInfo.appendChild(following);
   cardInfo.appendChild(bio);
 
-  // apply classes
-  newCard.classList.add('card');
-  cardInfo.classList.add('card-info');
-  name.classList.add('name');
-  username.classList.add('username');
-
-
-  // sources
-  newImg.src = obj.avatar_url;
-  name.textContent = obj.name;
-  username.textContent = [`Username: ${obj.login}`];
-  location.textContent = obj.location;
-  profileLink.href = obj.html_url;
-  profile.textContent = [`Profile: ${profileLink}`];
-  followers.textContent = [`Followers: ${obj.followers}`];
-  following.textContent = [`Followers: ${obj.following}`];
-  bio.textContent = obj.bio;
-
-  // newCard.addEventListener('click', () => {
-  //   newCard.classList.toggle('selected')
-  // })
-  
   return newCard;
 };
 
