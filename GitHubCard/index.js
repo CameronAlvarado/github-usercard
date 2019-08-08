@@ -27,9 +27,10 @@ const entryPoint = document.querySelector('.cards');
 
 const followersArray = ["CameronAlvarado", "jonyonson", "allisonkydy", "jeffreywhitaker"];
 
- followersArray.forEach(item => {
-  axios.get([`https://api.github.com/users/${item}`])
+ followersArray.forEach(username => {
+  axios.get([`https://api.github.com/users/${username}`])
   .then( (response) => {
+    console.log(response.data);
   entryPoint.appendChild(gitCard(response.data))
   })
   .catch( (err) => {
@@ -37,13 +38,15 @@ const followersArray = ["CameronAlvarado", "jonyonson", "allisonkydy", "jeffreyw
   })
 });
 
-  // .then( (response) => {
-  //   entryPoint.appendChild(gitCard(response.data))
-  // })
-  // .catch( (err) => {
-  //   console.log(err)
-  // })
-// })
+
+// axios.get('https://api.github.com/users/CameronAlvarado')
+//   .then( (response) => {
+//     entryPoint.appendChild(gitCard(response.data))
+//   })
+//   .catch( (err) => {
+//     console.log(err)
+//   })
+
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
