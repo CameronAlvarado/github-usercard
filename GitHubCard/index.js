@@ -25,28 +25,25 @@
 */
 const entryPoint = document.querySelector('.cards');
 
-const followersArray = ["CameronAlvarado", "jonyonson", "allisonkydy", "jeffreywhitaker"];
+const followersArray = ["CameronAlvarado", "jonyonson", "allisonkydy", "jeffreywhitaker", "JulieGumerman", "BrityHemming", "RealWillBrooks"];
 
- followersArray.forEach(username => {
-  axios.get([`https://api.github.com/users/${username}`])
-  .then( (response) => {
-    console.log(response.data);
-  entryPoint.appendChild(gitCard(response.data))
-  })
-  .catch( (err) => {
-    console.log(err);
-  })
-});
-
-
-// axios.get('https://api.github.com/users/CameronAlvarado')
-//   .then( (response) => {
-//     entryPoint.appendChild(gitCard(response.data))
-//   })
-//   .catch( (err) => {
-//     console.log(err)
-//   })
-
+  followersArray.forEach(username => {
+    axios.get([`https://api.github.com/users/${username}`])
+    .then( (response) => {
+      console.log(response.data);
+      entryPoint.appendChild(gitCard(response.data))
+    })
+// ------------------- stretch goal 1 attempt --------------------------
+    // axios.get("https://api.github.com/users/CameronAlvarado/followers")
+    // .then( (response) => {
+    //   console.log(response.data);
+    //   entryPoint.appendChild(gitCard(response.data))
+    // })
+// ---------------------------------------------------------------------
+    .catch( (err) => {
+      console.log(err);
+    });
+  });
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
@@ -98,7 +95,7 @@ function gitCard(obj) {
   profileLink.href = obj.html_url;
   profileLink.textContent = profileLink;
   followers.textContent = [`Followers: ${obj.followers}`];
-  following.textContent = [`Followers: ${obj.following}`];
+  following.textContent = [`Following: ${obj.following}`];
   bio.textContent = obj.bio;
 
   // append elements
