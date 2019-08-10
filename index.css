@@ -114,7 +114,7 @@ body {
 } */
 
 .cardImg:hover {
-  transform-origin: center;
+  transform-origin: right;
   animation: scale 500ms ease-in-out forwards;
 }
 @keyframes scale {

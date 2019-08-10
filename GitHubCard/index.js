@@ -139,11 +139,7 @@ function gitCard(obj) {
   cardInfo.appendChild(followers);
   cardInfo.appendChild(following);
   cardInfo.appendChild(bio);
-
-  // newImg.addEventListener('click', function() {
-  //   newImg.classList.toggle('imgClick');
-  // });
-
+  
   return newCard;
 };
 
