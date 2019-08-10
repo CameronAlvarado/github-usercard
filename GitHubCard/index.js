@@ -25,26 +25,54 @@
 */
 const entryPoint = document.querySelector('.cards');
 
-const followersArray = ["CameronAlvarado", "jonyonson", "allisonkydy", "jeffreywhitaker", "JulieGumerman", "BrityHemming", "RealWillBrooks"];
+// const followersArray = ["CameronAlvarado", "jonyonson", "allisonkydy", "jeffreywhitaker", "JulieGumerman", "BrityHemming", "RealWillBrooks"];
 
-  followersArray.forEach(username => {
-    axios.get([`https://api.github.com/users/${username}`])
-    .then( (response) => {
-      console.log(response.data);
-      entryPoint.appendChild(gitCard(response.data))
-    })
-// ------------------- stretch goal 1 attempt --------------------------
-    // axios.get("https://api.github.com/users/CameronAlvarado/followers")
-    // .then( (response) => {
-    //   console.log(response.data);
-    //   entryPoint.appendChild(gitCard(response.data))
-    // })
-// ---------------------------------------------------------------------
-    .catch( (err) => {
-      console.log(err);
+  // followersArray.forEach(username => {
+  //   axios.get([`https://api.github.com/users/${username}`])
+  //   .then( (response) => {
+  //     console.log(response.data);
+  //     entryPoint.appendChild(gitCard(response.data))
+  //   })
+  
+// ------------------- stretch goal 1 success! --------------------------
+
+// this creates a new array from my followers.
+const URL = "https://api.github.com/users/CameronAlvarado/followers";
+  axios.get(URL)
+  .then( (response) => {
+    console.log(response.data);
+    response.data.forEach( (element) => {
+      let newArray =[];
+      newArray.push(element.login);
+      // this loops through the new array and plugs the logins into the url.
+      newArray.forEach(username => {
+          axios.get([`https://api.github.com/users/${username}`])
+          .then( (response) => {
+            console.log(response.data);
+            entryPoint.appendChild(gitCard(response.data))
+          })
+          .catch( (err) => {
+            console.log(err);
+          });
+      });
     });
+  })
+  .catch( (err) => {
+    console.log(err);
+  })
+  // this slices off "/followers" from the original URL;
+  let newURL = URL.slice(0, -10);
+  console.log(newURL);
+  // this appends my card onto the page
+  axios.get(newURL)
+  .then( (response) => {
+    console.log(response.data);
+    entryPoint.appendChild(gitCard(response.data))
+  })
+  .catch( (err) => {
+    console.log(err);
   });
-
+// ---------------------------------------------------------------------
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
 
