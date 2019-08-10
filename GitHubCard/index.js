@@ -113,6 +113,8 @@ function gitCard(obj) {
   cardInfo.classList.add('card-info');
   name.classList.add('name');
   username.classList.add('username');
+  newImg.classList.add('cardImg');
+
 
   // sources
   newImg.src = obj.avatar_url;
@@ -137,6 +139,10 @@ function gitCard(obj) {
   cardInfo.appendChild(followers);
   cardInfo.appendChild(following);
   cardInfo.appendChild(bio);
+
+  // newImg.addEventListener('click', function() {
+  //   newImg.classList.toggle('imgClick');
+  // });
 
   return newCard;
 };

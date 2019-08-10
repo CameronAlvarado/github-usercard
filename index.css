@@ -101,11 +101,26 @@ body {
   margin-bottom: 30px;
 }
 
-.card img {
+.cardImg {
   width: 150px;
   height: 150px;
   border-radius: 3px;
   margin-right: 20px;
+}
+/* 
+.imgClick {
+  width: 250px;
+  height: 250px;
+} */
+
+.cardImg:hover {
+  transform-origin: center;
+  animation: scale 500ms ease-in-out forwards;
+}
+@keyframes scale {
+  to {
+    transform: scale(2.0);
+  }
 }
 
 .card .name {
