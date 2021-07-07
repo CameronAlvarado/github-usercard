@@ -23,9 +23,56 @@
           Using that array, iterate over it, requesting data for each user, creating a new card for each
           user, and adding that card to the DOM.
 */
+const entryPoint = document.querySelector('.cards');
 
-const followersArray = [];
+// const followersArray = ["CameronAlvarado", "jonyonson", "allisonkydy", "jeffreywhitaker", "JulieGumerman", "BrityHemming", "RealWillBrooks"];
 
+  // followersArray.forEach(username => {
+  //   axios.get([`https://api.github.com/users/${username}`])
+  //   .then( (response) => {
+  //     console.log(response.data);
+  //     entryPoint.appendChild(gitCard(response.data))
+  //   })
+  
+// ------------------- stretch goal 1 success! --------------------------
+
+// this creates a new array from my followers.
+const URL = "https://api.github.com/users/CameronAlvarado/followers";
+  axios.get(URL)
+  .then( (response) => {
+    console.log(response.data);
+    response.data.forEach( (element) => {
+      let newArray =[];
+      newArray.push(element.login);
+      // this loops through the new array and plugs the logins into the url.
+      newArray.forEach(username => {
+          axios.get([`https://api.github.com/users/${username}`])
+          .then( (response) => {
+            console.log(response.data);
+            entryPoint.appendChild(gitCard(response.data))
+          })
+          .catch( (err) => {
+            console.log(err);
+          });
+      });
+    });
+  })
+  .catch( (err) => {
+    console.log(err);
+  })
+  // this slices off "/followers" from the original URL;
+  let newURL = URL.slice(0, -10);
+  console.log(newURL);
+  // this appends my card onto the page
+  axios.get(newURL)
+  .then( (response) => {
+    console.log(response.data);
+    entryPoint.appendChild(gitCard(response.data))
+  })
+  .catch( (err) => {
+    console.log(err);
+  });
+// ---------------------------------------------------------------------
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
 
@@ -46,6 +93,56 @@ const followersArray = [];
 
 */
 
+function gitCard(obj) {
+
+  // create elements
+  let newCard = document.createElement('div');
+  let newImg = document.createElement('img');
+  let cardInfo = document.createElement('div');
+  let name = document.createElement('h3');
+  let username = document.createElement('p');
+  let location = document.createElement('p');
+  let profile = document.createElement('p');
+  let profileLink = document.createElement('a');
+  let followers = document.createElement('p');
+  let following = document.createElement('p');
+  let bio = document.createElement('p');
+  
+  // apply classes
+  newCard.classList.add('card');
+  cardInfo.classList.add('card-info');
+  name.classList.add('name');
+  username.classList.add('username');
+
+  // sources
+  newImg.src = obj.avatar_url;
+  name.textContent = obj.name;
+  username.textContent = [`Username: ${obj.login}`];
+  location.textContent = obj.location;
+  profile.textContent = "Profile: ";
+  profileLink.href = obj.html_url;
+  profileLink.textContent = profileLink;
+  followers.textContent = [`Followers: ${obj.followers}`];
+  following.textContent = [`Following: ${obj.following}`];
+  bio.textContent = obj.bio;
+
+  // append elements
+  newCard.appendChild(newImg);
+  newCard.appendChild(cardInfo);
+  cardInfo.appendChild(name);
+  cardInfo.appendChild(username);
+  cardInfo.appendChild(location);
+  cardInfo.appendChild(profile);
+  profile.appendChild(profileLink);
+  cardInfo.appendChild(followers);
+  cardInfo.appendChild(following);
+  cardInfo.appendChild(bio);
+
+  return newCard;
+};
+
+// let entryPoint = document.querySelector('.entry')
+
 /* List of LS Instructors Github username's: 
   tetondan
   dustinmyers
@@ -53,3 +150,4 @@ const followersArray = [];
   luishrd
   bigknell
 */
+
